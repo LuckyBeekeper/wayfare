@@ -341,3 +341,4 @@ type Result struct {
 	// A caller that reports only Quotes and Recommended will silently
 	// misrepresent a no-market or derivative corridor.
 	Integrity
+}

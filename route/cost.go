@@ -12,34 +12,6 @@
 // are the anchor's own charge for a conversion, obtainable via SEP-38 when
 // the anchor publishes an ANCHOR_QUOTE_SERVER. Expected failure cost stays
 // explicitly unknown until failure history exists.
-// CostDecomposition breaks the effective transfer cost into separately-reported
-// components: FX loss, network fees, anchor fee, slippage, and expected
-// failure cost.
-//
-// Currently, the verdict reports a single loss percentage against fair value.
-// That number is useful but opaque. Showing the decomposition turns a single
-// verdict into actionable information.
-//
-// Each component is computed and reported independently. Network fees and
-// anchor fees are reported separately because they have different sources:
-// network fees are Stellar base-fee charges per operation, while anchor fees
-// are the anchor's own charge for a conversion, obtainable via SEP-38 when
-// the anchor publishes an ANCHOR_QUOTE_SERVER. Expected failure cost stays
-// explicitly unknown until failure history exists.
-// CostDecomposition breaks the effective transfer cost into separately-reported
-// components: FX loss, network fees, anchor fee, slippage, and expected
-// failure cost.
-//
-// Currently, the verdict reports a single loss percentage against fair value.
-// That number is useful but opaque. Showing the decomposition turns a single
-// verdict into actionable information.
-//
-// Each component is computed and reported independently. Network fees and
-// anchor fees are reported separately because they have different sources:
-// network fees are Stellar base-fee charges per operation, while anchor fees
-// are the anchor's own charge for a conversion, obtainable via SEP-38 when
-// the anchor publishes an ANCHOR_QUOTE_SERVER. Expected failure cost stays
-// explicitly unknown until failure history exists.
 package route
 
 import (
@@ -114,9 +86,6 @@ func Decompose(q Quote, mid decimal.Decimal) CostDecomposition {
 	// normalised for denomination by sep38.Quote) can be wired here.
 	anchorFeeReason := "anchor fee not available; the anchor does not publish an ANCHOR_QUOTE_SERVER, so its fee cannot be obtained programmatically"
 	if q.Kind == KindAnchorSEP38 {
-		// anchor fee available via SEP-38 but corridor not yet wired in
-		// SEP-38 support is wired in. The sep38.Quote.FeeInBuyAsset field
-		// already carries the converted fee.
 		anchorFeeReason = "anchor fee available via SEP-38 but corridor not yet wired in"
 	}
 	parts = append(parts, CostPart{
